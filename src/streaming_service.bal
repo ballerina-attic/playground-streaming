@@ -12,7 +12,6 @@ type StockUpdate {
     float price;
 };
 
-
 // Record that represents the events that are produced after
 // stream processing.
 type Result {
@@ -96,8 +95,7 @@ service<http:Service> nasdaq bind {} {
         };
 
         // Publish the record as an event to the stream.
-        // The forever block processes these events over
-        // time.
+        // The forever block processes these events over time.
         inStream.publish(stockUpdate);
 
         http:Response res = new;
