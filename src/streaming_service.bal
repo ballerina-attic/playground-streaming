@@ -87,7 +87,7 @@ endpoint http:Listener listener {
 service<http:Service> nasdaq bind listener {
 
     publishQuote (endpoint conn, http:Request req) {
-        string reqStr = check req.getStringPayload();
+        string reqStr = check req.getTextPayload();
         float stockPrice  = check <float> reqStr;
 
         string stockSymbol = "GOOG";
