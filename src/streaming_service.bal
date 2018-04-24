@@ -6,7 +6,7 @@ import ballerina/io;
 // clearly defined time and is recorded in a collection of
 // fields. 'Stream' is a constant flow of data events.
 
-// Record type that represents the stock update event
+// Record type that represents the stock update event.
 type StockUpdate {
     string symbol;
     float price;
@@ -33,7 +33,7 @@ stream<StockUpdate> inStream;
 function initStreamConsumer () {
 
     // After the stream processing happens the resulted events
-    // are sent to this stream
+    // are sent to this stream.
     stream<Result> resultStream;
 
     // Subscribe event handler functions to the result event
@@ -66,21 +66,25 @@ function initStreamConsumer () {
     }
 }
 
-// Registered as an event handlers for the resultStream
+// Registered as an event handlers for the resultStream.
 // Prints out the stock ticker and increments count.
 function quoteCountEventHandler (Result result) {
     io:println("Quote - " + result.symbol
             + " : count = " + result.count);
 }
 
-// Registered as an event handlers for the resultStream
+// Registered as an event handlers for the resultStream.
 // Prints out the stock ticker and updates average value.
 function quoteAverageEventHandler (Result result) {
     io:println("Quote - " + result.symbol
             + " : average = " + result.average);
 }
 
-service<http:Service> nasdaq bind {} {
+endpoint http:Listener listener {
+    port:9090
+};
+
+service<http:Service> nasdaq bind listener {
 
     publishQuote (endpoint conn, http:Request req) {
         string reqStr = check req.getStringPayload();
