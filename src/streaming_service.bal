@@ -56,9 +56,9 @@ function initStreamConsumer () {
     forever {
         from inStream where price > 1000
         window timeBatch(3000)
-        select symbol
-        , count(symbol) as count
-        , avg(price) as average
+        select symbol,
+            count(symbol) as count,
+            avg(price) as average
         group by symbol
         => (Result [] result) {
             resultStream.publish(result);
