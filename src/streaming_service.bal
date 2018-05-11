@@ -51,8 +51,8 @@ function initStreamConsumer () {
     // 1000. Count the number of stock quotes that are
     // received during the time window for a given symbol and
     // calculate the average price of all such stock quotes.
-    // The result is published to the resulstStream, which
-    // triggers the function handlers for that stream stream.
+    // The result is published to the resultStream, which
+    // triggers the function handlers for that stream.
     forever {
         from inStream where price > 1000
         window timeBatch(3000)
