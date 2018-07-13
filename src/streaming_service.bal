@@ -7,17 +7,17 @@ import ballerina/io;
 // fields. 'Stream' is a constant flow of data events.
 
 // Record type that represents the stock update event.
-type StockUpdate {
-    string symbol;
-    float price;
+type StockUpdate record {
+    string symbol,
+    float price,
 };
 
 // Record that represents the events that are produced after
 // stream processing.
-type Result {
-    string symbol;
-    int count;
-    float average;
+type Result record {
+    string symbol,
+    int count,
+    float average,
 };
 
 // Asynchronously invoke stream initialization function.
