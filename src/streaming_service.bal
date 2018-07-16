@@ -32,8 +32,8 @@ stream<StockUpdate> inStream;
 // to the output stream.
 function initStreamConsumer () {
 
-    // After the stream processing happens the resulted events
-    // are sent to this stream.
+    // After the stream processing happens the resulted 
+    // events are sent to this stream.
     stream<Result> resultStream;
 
     // Subscribe event handler functions to the result event
@@ -99,7 +99,8 @@ service<http:Service> nasdaq bind listener {
         };
 
         // Publish the record as an event to the stream.
-        // The forever block processes these events over time.
+        // The forever block processes these events
+        // over time.
         inStream.publish(stockUpdate);
 
         http:Response res = new;
