@@ -1,4 +1,6 @@
-#Ballerina Playground - Streaming Service
+[![Build Status](https://travis-ci.org/ballerina-guides/playground-streaming.svg?branch=master)](https://travis-ci.org/ballerina-guides/playground-streaming)
+
+# Ballerina Playground - Streaming Service
 
 
 Request 
