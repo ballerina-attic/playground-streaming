@@ -7,15 +7,15 @@ import ballerina/io;
 
 // Record type that represents the stock update event
 type StockUpdate record {
-    string symbol,
-    float price,
+    string symbol;
+    float price;
 };
 
 // Represents the events that are produced after stream processing
 type Result record {
-    string symbol,
-    int count,
-    float average,
+    string symbol;
+    int count;
+    float average;
 };
 
 // Asynchronously invoke the stream initializer
