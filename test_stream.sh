@@ -12,7 +12,7 @@ do
 price="102$count" 
 echo $price
 curl -X POST -d $price  "http://localhost:9090/nasdaq/publishQuote"
-sleep 1+$count
-(( count++ ))
+sleep $((1+count))
+count=$((1+count))
 done
 
