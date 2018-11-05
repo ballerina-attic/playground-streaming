@@ -51,7 +51,9 @@ function initStreamConsumer () {
             avg(price) as average
         group by symbol
         => (Result [] result) {
-            resultStream.publish(result);
+            foreach res in result {
+                resultStream.publish(res);
+            }
         }
     }
 }
