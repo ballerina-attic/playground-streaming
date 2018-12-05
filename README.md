@@ -2,6 +2,7 @@
 
 # Ballerina Playground - Streaming Service
 
+Note: Ballerina Streaming capabilities are shipped as the experimental feature in the latest release. Please use `--experimental` flag when compiling Ballerina files which have streaming constructs.
 
 Request 
 
