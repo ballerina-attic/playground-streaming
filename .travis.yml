@@ -36,4 +36,4 @@ script:
 
 - cd src
 
-- ballerina build
+- ballerina build --experimental
