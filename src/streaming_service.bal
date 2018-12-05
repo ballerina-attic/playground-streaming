@@ -18,18 +18,18 @@ type Result record {
     float average;
 };
 
-// Asynchronously invoke the stream initializer
-future f1 = start initStreamConsumer();
-
 // Receives and publishes incoming events
-stream<StockUpdate> inStream;
+stream<StockUpdate> inStream = new;
+
+// Asynchronously invoke the stream initializer
+future<()> ftr = start initStreamConsumer();
 
 // Initializes the input stream, contains event processing logic,
 // and publishes events to an output stream.
 function initStreamConsumer () {
 
     // Results after stream processing pushed to output stream 
-    stream<Result> resultStream;
+    stream<Result> resultStream = new;
 
     // Event handler functions for events pushed to this stream
     resultStream.subscribe(quoteCountEventHandler);
@@ -51,7 +51,7 @@ function initStreamConsumer () {
             avg(price) as average
         group by symbol
         => (Result [] result) {
-            foreach res in result {
+            foreach var res in result {
                 resultStream.publish(res);
             }
         }
@@ -70,18 +70,20 @@ function quoteAverageEventHandler (Result result) {
         " : average = " + result.average);
 }
 
-endpoint http:Listener listener {
-    port:9090
-};
+listener http:Listener ep = new (9090);
+
+@http:ServiceConfig {
+    basePath: "/nasdaq"
+}
 
 // This service is the program's entrypoint. Each invocation to 
 // this service will generate an event to be handled by the stream
 // processor as part of its time window analysis.
-service<http:Service> nasdaq bind listener {
+service nasdaq on ep {
 
-    publishQuote (endpoint conn, http:Request req) {
-        string reqStr = check req.getTextPayload();
-        float stockPrice  = check <float> reqStr;
+    resource function publishQuote (http:Caller conn, http:Request req) {
+        string reqStr = <string> req.getTextPayload();
+        float stockPrice  = <float> float.convert(reqStr);
 
         string stockSymbol = "GOOG";
 
