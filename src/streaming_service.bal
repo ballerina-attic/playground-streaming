@@ -21,15 +21,15 @@ type Result record {
 // Receives and publishes incoming events
 stream<StockUpdate> inStream = new;
 
+// Results after stream processing pushed to output stream
+stream<Result> resultStream = new;
+
 // Asynchronously invoke the stream initializer
 future<()> ftr = start initStreamConsumer();
 
 // Initializes the input stream, contains event processing logic,
 // and publishes events to an output stream.
 function initStreamConsumer () {
-
-    // Results after stream processing pushed to output stream 
-    stream<Result> resultStream = new;
 
     // Event handler functions for events pushed to this stream
     resultStream.subscribe(quoteCountEventHandler);
@@ -44,12 +44,12 @@ function initStreamConsumer () {
     // a given symbol and calculate the average price of all such
     // stock quotes. Publish the result to 'resultStream'.
     forever {
-        from inStream where price > 1000
-        window timeBatch(3000)
-        select symbol,
-            count(symbol) as count,
-            avg(price) as average
-        group by symbol
+        from inStream where inStream.price > 1000
+        window timeBatchWindow(3000)
+        select inStream.symbol,
+            count() as count,
+            avg(inStream.price) as average
+        group by inStream.symbol
         => (Result [] result) {
             foreach var res in result {
                 resultStream.publish(res);
