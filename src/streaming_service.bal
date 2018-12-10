@@ -38,11 +38,12 @@ function initStreamConsumer () {
     // Never-ending stream processing logic. A 'forever' clause
     // consumes events and processes them across a time window.
 
-    // Within a time window of 3s, select the stock quote events in
-    // which the stock price is larger than 1000. Count the number
-    // of stock quotes that are received during the time window for
-    // a given symbol and calculate the average price of all such
-    // stock quotes. Publish the result to 'resultStream'.
+    // Within a time window of 3s, select the stock quote events
+    // in which the stock price is larger than 1000. Count the
+    // number of stock quotes that are received during the time
+    // window for a given symbol and calculate the average price
+    // of all such stock quotes. Publish the result to
+    // 'resultStream'.
     forever {
         from inStream where price > 1000
         window timeBatch(3000)
@@ -81,7 +82,8 @@ listener http:Listener ep = new (9090);
 // processor as part of its time window analysis.
 service nasdaq on ep {
 
-    resource function publishQuote (http:Caller conn, http:Request req) {
+    resource function publishQuote (http:Caller conn,
+                                    http:Request req) {
         string reqStr = <string> req.getTextPayload();
         float stockPrice  = <float> float.convert(reqStr);
 
