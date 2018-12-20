@@ -46,7 +46,7 @@ function initStreamConsumer () {
     // 'resultStream'.
     forever {
         from inStream where inStream.price > 1000
-        window timeBatchWindow(3000)
+        window timeBatch(3000)
         select inStream.symbol,
             count() as count,
             avg(inStream.price) as average
