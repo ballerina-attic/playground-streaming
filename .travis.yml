@@ -32,10 +32,6 @@ script:
 
 - export PATH=${PATH}:$(pwd)/${DISTRIBUTION_NAME}/bin
 
-- export JAVA_OPTS="-Denable.siddhiRuntime=false"
-
-- echo $JAVA_OPTS
-
 - ballerina version
 
 - cd src
