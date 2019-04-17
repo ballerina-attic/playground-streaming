@@ -83,7 +83,7 @@ listener http:Listener ep = new (9090);
 service nasdaq on ep {
 
     resource function publishQuote (http:Caller conn,
-                                    http:Request req) {
+                                    http:Request req) returns error? {
         string reqStr = <string> req.getTextPayload();
         float stockPrice  = <float> float.convert(reqStr);
 
@@ -100,6 +100,6 @@ service nasdaq on ep {
 
         http:Response res = new;
         res.statusCode = 202;
-        _ = conn -> respond(res);
+        _ = check conn -> respond(res);
     }
 }
